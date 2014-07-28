@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5764DC181985D15200B03159 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764DC171985D15200B03159 /* main.swift */; };
+		5764DC211985D2B600B03159 /* LoremParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764DC1E1985D2B600B03159 /* LoremParser.swift */; };
+		5764DC221985D2B600B03159 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764DC1F1985D2B600B03159 /* Models.swift */; };
+		5764DC231985D2B600B03159 /* Multiset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764DC201985D2B600B03159 /* Multiset.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,20 @@
 /* Begin PBXFileReference section */
 		5764DC141985D15200B03159 /* Explorem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Explorem; sourceTree = BUILT_PRODUCTS_DIR; };
 		5764DC171985D15200B03159 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		5764DC1E1985D2B600B03159 /* LoremParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoremParser.swift; sourceTree = "<group>"; };
+		5764DC1F1985D2B600B03159 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		5764DC201985D2B600B03159 /* Multiset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Multiset.swift; sourceTree = "<group>"; };
+		5764DC241985D58A00B03159 /* loremipsum0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum0.txt; sourceTree = "<group>"; };
+		5764DC251985D58A00B03159 /* loremipsum1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum1.txt; sourceTree = "<group>"; };
+		5764DC261985D58A00B03159 /* loremipsum2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum2.txt; sourceTree = "<group>"; };
+		5764DC271985D58A00B03159 /* loremipsum3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum3.txt; sourceTree = "<group>"; };
+		5764DC281985D58A00B03159 /* loremipsum4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum4.txt; sourceTree = "<group>"; };
+		5764DC291985D58A00B03159 /* loremipsum5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum5.txt; sourceTree = "<group>"; };
+		5764DC2A1985D58A00B03159 /* loremipsum6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum6.txt; sourceTree = "<group>"; };
+		5764DC2B1985D58A00B03159 /* loremipsum7.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum7.txt; sourceTree = "<group>"; };
+		5764DC2C1985D58A00B03159 /* loremipsum8.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum8.txt; sourceTree = "<group>"; };
+		5764DC2D1985D58A00B03159 /* loremipsum9.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum9.txt; sourceTree = "<group>"; };
+		579BF6601985E1420015B0F7 /* Scratchpad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Scratchpad.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,8 +58,19 @@
 		5764DC0B1985D15200B03159 = {
 			isa = PBXGroup;
 			children = (
+				579BF6601985E1420015B0F7 /* Scratchpad.playground */,
 				5764DC161985D15200B03159 /* Explorem */,
 				5764DC151985D15200B03159 /* Products */,
+				5764DC241985D58A00B03159 /* loremipsum0.txt */,
+				5764DC251985D58A00B03159 /* loremipsum1.txt */,
+				5764DC261985D58A00B03159 /* loremipsum2.txt */,
+				5764DC271985D58A00B03159 /* loremipsum3.txt */,
+				5764DC281985D58A00B03159 /* loremipsum4.txt */,
+				5764DC291985D58A00B03159 /* loremipsum5.txt */,
+				5764DC2A1985D58A00B03159 /* loremipsum6.txt */,
+				5764DC2B1985D58A00B03159 /* loremipsum7.txt */,
+				5764DC2C1985D58A00B03159 /* loremipsum8.txt */,
+				5764DC2D1985D58A00B03159 /* loremipsum9.txt */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +86,9 @@
 			isa = PBXGroup;
 			children = (
 				5764DC171985D15200B03159 /* main.swift */,
+				5764DC1E1985D2B600B03159 /* LoremParser.swift */,
+				5764DC1F1985D2B600B03159 /* Models.swift */,
+				5764DC201985D2B600B03159 /* Multiset.swift */,
 			);
 			path = Explorem;
 			sourceTree = "<group>";
@@ -118,6 +149,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5764DC231985D2B600B03159 /* Multiset.swift in Sources */,
+				5764DC221985D2B600B03159 /* Models.swift in Sources */,
+				5764DC211985D2B600B03159 /* LoremParser.swift in Sources */,
 				5764DC181985D15200B03159 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,6 +267,7 @@
 				5764DC1D1985D15200B03159 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
