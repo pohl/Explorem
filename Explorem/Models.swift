@@ -13,7 +13,7 @@ class Word: Printable, Equatable, Hashable {
     var count = 1
     
     init(fromString string:String) {
-        spelling = string
+        spelling = string.lowercaseString
     }
     
     var description: String {

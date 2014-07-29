@@ -132,14 +132,6 @@ class LoremParser {
         return sentences
     }
     
-    func stopwatch(block: Void -> Void) -> Double {
-        var start = NSDate()
-        block()
-        var end = NSDate()
-        var timeTaken = end.timeIntervalSinceDate(start) * 1000
-        return timeTaken
-    }
-    
     func readAllSentences() -> [Sentence] {
         var sentences: [Sentence] = []
         for i in 0...9 {
@@ -149,42 +141,6 @@ class LoremParser {
         }
         return sentences
     }
-
     
-    func run() -> () {
-        let sentences: [Sentence] = readAllSentences()
-        let elapsed = stopwatch {
-            var sentenceCounts = Multiset<Sentence>()
-            var phraseCounts = Multiset<Phrase>()
-            var wordCounts = Multiset<Word>()
-            for sentence in sentences {
-                sentenceCounts.add(sentence)
-                for phrase in sentence.phrases {
-                    phraseCounts.add(phrase)
-                    for word in phrase.words {
-                        wordCounts.add(word)
-                    }
-                }
-            }
-//            for (key, value) in sentenceCounts {
-//                if value != 1 {
-//                    println("\(value) occurrences of sentence \(key)")
-//                }
-//            }
-//            for (key, value) in phraseCounts {
-//                if value != 1 {
-//                    println("\(value) occurrences of phrase: \(key)")
-//                }
-//            }
-            
-            for (key, value) in wordCounts {
-                if value != 0 {
-                    println("\(value) occurrences of word: \(key)")
-                }
-            }
-        }
-        println("elapsed == \(elapsed)")
-    }
-    
-}
+ }
 
