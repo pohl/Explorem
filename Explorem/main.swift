@@ -13,15 +13,11 @@ func run() -> () {
     let sentences: [Sentence] = parser.readAllSentences()
     let elapsed = stopwatch {
         var sentenceCounts = Multiset<Sentence>()
-        var phraseCounts = Multiset<Phrase>()
-        var wordCounts = Multiset<Word>()
+        var wordCounts = Multiset<String>()
         for sentence in sentences {
             sentenceCounts.add(sentence)
-            for phrase in sentence.phrases {
-                phraseCounts.add(phrase)
-                for word in phrase.words {
-                    wordCounts.add(word)
-                }
+            for word in sentence.words {
+                wordCounts.add(word)
             }
         }
         //            for (key, value) in sentenceCounts {

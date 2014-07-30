@@ -8,82 +8,80 @@
 
 import Foundation
 
-class Word: Printable, Equatable, Hashable {
-    var spelling:String
-    var count = 1
-    
-    init(fromString string:String) {
-        spelling = string.lowercaseString
-    }
+
+enum Token: Equatable, Hashable {
+    case Word(String)
+    case Punctuation(String)
     
     var description: String {
-        return spelling
+        switch self {
+        case .Word(let w):
+            return w
+        case .Punctuation(let p):
+            return p
+        }
     }
     
     var hashValue: Int {
-        return spelling.hashValue
+        switch self {
+        case .Word(let w):
+            return w.hashValue
+        case .Punctuation(let p):
+            return p.hashValue
+        }
+    }
+    
+    var isWord: Bool {
+        switch self {
+        case .Word(_):
+            return true
+        default:
+            return false
+        }
     }
     
 }
 
-func == (lhs: Word, rhs: Word) -> Bool {
-    return lhs.spelling == rhs.spelling
+func == (lhs: Token, rhs: Token) -> Bool {
+    switch (lhs, rhs) {
+    case (.Word(let w1), .Word(let w2)):
+        return w1 == w2
+    case (.Punctuation(let p1), .Punctuation(let p2)):
+        return p1 == p2
+    }
 }
 
-
-
-
-
-
-class Phrase: Printable, Equatable, Hashable {
-    var words:[Word]
+struct Sentence: Printable, Equatable, Hashable {
+    var tokens:[Token]
     
-    init(fromWords w: [Word]) {
-        words = w
+    init(fromTokens t: [Token]) {
+        tokens = t
+    }
+    
+    var words: [String] {
+    return tokens.filter {
+        t in t.isWord
+        }.map {
+            $0.description
+        }    
     }
     
     var description: String {
-        return NSArray.componentsJoinedByString(words.map { $0.description })(",")
+        return NSArray.componentsJoinedByString(tokens.map { $0.description })(" | ")
+        //return "sentence has \(phrases.count) phrases"
     }
     
     var hashValue: Int {
         var hashCode = 1
-        for w in words {
-            hashCode = 31 &* hashCode &+ w.hashValue
+        for t in tokens {
+            hashCode = 31 &* hashCode &+ t.hashValue
         }
         return hashCode
     }
     
 }
 
-func == (lhs: Phrase, rhs: Phrase) -> Bool {
-    return lhs.words == rhs.words
-}
-
-
-class Sentence: Printable, Equatable, Hashable {
-    var phrases:[Phrase]
-    
-    init(fromPhrases p: [Phrase]) {
-        phrases = p
-    }
-    
-    var description: String {
-        return NSArray.componentsJoinedByString(phrases.map { $0.description })(" | ")
-        //return "sentence has \(phrases.count) phrases"
-    }
-    
-    var hashValue: Int {
-        var hashCode = 1
-            for p in phrases {
-                hashCode = 31 &* hashCode &+ p.hashValue
-            }
-        return hashCode
-    }
-    
-}
-
 func == (lhs: Sentence, rhs: Sentence) -> Bool {
-    return lhs.phrases == rhs.phrases
+    return lhs.tokens == rhs.tokens
 }
 

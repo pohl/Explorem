@@ -21,7 +21,6 @@ enum Punctuation: String {
     case None = "none"
 }
 
-
 extension NSScanner {
     
     func advanceToNextWord() -> Bool {
@@ -52,18 +51,18 @@ extension NSScanner {
         }
     }
     
-    func checkForWord() -> Word? {
+    func checkForWord() -> Token? {
         var buffer: NSString?  = nil
         let foundWord = self.scanUpToCharactersFromSet(wordTerminators, intoString: &buffer)
         if foundWord {
-            return Word(fromString: buffer!)
+            return Token.Word(buffer!.lowercaseString)
         } else {
             return nil
         }
     }
     
-    func nextPhrase() -> (Phrase,Punctuation)? {
-        var result: [Word] = []
+    func nextPhrase() -> (Token,Punctuation)? {
+        var result: [Token] = []
         var punctuation: Punctuation? = nil
         while !punctuation {
             self.advanceToNextWord()
@@ -85,13 +84,13 @@ extension NSScanner {
     }
     
     func nextSentence() -> Sentence? {
-        var phrases: [Phrase] = []
-        var tuple: (Phrase,Punctuation)? = nil
+        var tokens: [Token] = []
+        var tuple: (Token,Punctuation)? = nil
         outerLoop: while true {
             tuple = nextPhrase()
             if tuple {
                 let (phrase, punctuation) = tuple!
-                phrases.append(phrase);
+                tokens.append(phrase);
                 switch punctuation {
                 case .Comma:
                     continue
@@ -102,7 +101,7 @@ extension NSScanner {
                 break outerLoop
             }
         }
-        return phrases.count != 0 ? Sentence(fromPhrases: phrases) : nil
+        return tokens.count != 0 ? Sentence(fromPhrases: tokens) : nil
     }
 
     
