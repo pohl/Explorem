@@ -36,6 +36,7 @@ func run() -> () {
                 println("\(value) occurrences of word: \(key)")
             }
         }
+        println("\(wordCounts.dictionary.count) unique words in sample");
     }
     println("elapsed == \(elapsed)")
 }
