@@ -19,6 +19,22 @@ enum Punctuation: String {
     case Semicolon = "semicolon"
     case Unknown = "unknown"
     case None = "none"
+    
+    var description: String {
+        switch self {
+        case .Comma:
+            return ","
+        case .Period:
+            return "."
+        case .Semicolon:
+            return ";"
+        case .Unknown:
+            return "[UNKNOWN]"
+        case .None:
+            return "[NONE]"
+        }
+    }
+    
 }
 
 extension NSScanner {
@@ -61,7 +77,7 @@ extension NSScanner {
         }
     }
     
-    func nextPhrase() -> (Token,Punctuation)? {
+    func nextPhrase() -> ([Token],Punctuation)? {
         var result: [Token] = []
         var punctuation: Punctuation? = nil
         while !punctuation {
@@ -69,15 +85,14 @@ extension NSScanner {
             var buffer: NSString?  = nil
             let foundWord = self.scanUpToCharactersFromSet(wordTerminators, intoString: &buffer)
             if foundWord {
-                result.append(Word(fromString: buffer!))
+                result.append(Token.Word(buffer!.lowercaseString))
                 punctuation = checkForPunctuation()
             } else {
                 punctuation = Punctuation.None
             }
         }
         if 0 != result.count {
-            let p = Phrase(fromWords: result)
-            return (p, punctuation!)
+            return (result, punctuation!)
         } else {
             return nil
         }
@@ -85,12 +100,13 @@ extension NSScanner {
     
     func nextSentence() -> Sentence? {
         var tokens: [Token] = []
-        var tuple: (Token,Punctuation)? = nil
+        var tuple: ([Token],Punctuation)? = nil
         outerLoop: while true {
             tuple = nextPhrase()
             if tuple {
                 let (phrase, punctuation) = tuple!
-                tokens.append(phrase);
+                tokens = tokens + phrase
+                tokens.append(Token.Punctuation(punctuation.description))
                 switch punctuation {
                 case .Comma:
                     continue
@@ -101,7 +117,7 @@ extension NSScanner {
                 break outerLoop
             }
         }
-        return tokens.count != 0 ? Sentence(fromPhrases: tokens) : nil
+        return tokens.count != 0 ? Sentence(fromTokens: tokens) : nil
     }
 
     

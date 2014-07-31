@@ -20,11 +20,11 @@ func run() -> () {
                 wordCounts.add(word)
             }
         }
-        //            for (key, value) in sentenceCounts {
-        //                if value != 1 {
-        //                    println("\(value) occurrences of sentence \(key)")
-        //                }
-        //            }
+        for (key, value) in sentenceCounts {
+            if value != 1 {
+                println("\(value) occurrences of sentence \(key)")
+            }
+        }
         //            for (key, value) in phraseCounts {
         //                if value != 1 {
         //                    println("\(value) occurrences of phrase: \(key)")

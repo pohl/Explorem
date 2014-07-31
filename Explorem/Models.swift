@@ -48,6 +48,8 @@ func == (lhs: Token, rhs: Token) -> Bool {
         return w1 == w2
     case (.Punctuation(let p1), .Punctuation(let p2)):
         return p1 == p2
+    default:
+        return false
     }
 }
 
