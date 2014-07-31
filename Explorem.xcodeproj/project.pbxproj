@@ -28,6 +28,12 @@
 
 /* Begin PBXFileReference section */
 		572133C819874A9200A1F6FB /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timer.swift; path = ../Timer.swift; sourceTree = "<group>"; };
+		572133CA1989EEB900A1F6FB /* loremipsum10.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum10.txt; sourceTree = "<group>"; };
+		572133CB1989EEB900A1F6FB /* loremipsum11.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum11.txt; sourceTree = "<group>"; };
+		572133CC1989EEB900A1F6FB /* loremipsum12.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum12.txt; sourceTree = "<group>"; };
+		572133CD1989EEB900A1F6FB /* loremipsum13.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum13.txt; sourceTree = "<group>"; };
+		572133CE1989EEB900A1F6FB /* loremipsum14.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum14.txt; sourceTree = "<group>"; };
+		572133CF1989EEB900A1F6FB /* loremipsum15.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum15.txt; sourceTree = "<group>"; };
 		5764DC141985D15200B03159 /* Explorem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Explorem; sourceTree = BUILT_PRODUCTS_DIR; };
 		5764DC171985D15200B03159 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5764DC1E1985D2B600B03159 /* LoremParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoremParser.swift; sourceTree = "<group>"; };
@@ -73,6 +79,12 @@
 				5764DC2B1985D58A00B03159 /* loremipsum7.txt */,
 				5764DC2C1985D58A00B03159 /* loremipsum8.txt */,
 				5764DC2D1985D58A00B03159 /* loremipsum9.txt */,
+				572133CA1989EEB900A1F6FB /* loremipsum10.txt */,
+				572133CB1989EEB900A1F6FB /* loremipsum11.txt */,
+				572133CC1989EEB900A1F6FB /* loremipsum12.txt */,
+				572133CD1989EEB900A1F6FB /* loremipsum13.txt */,
+				572133CE1989EEB900A1F6FB /* loremipsum14.txt */,
+				572133CF1989EEB900A1F6FB /* loremipsum15.txt */,
 			);
 			sourceTree = "<group>";
 		};
