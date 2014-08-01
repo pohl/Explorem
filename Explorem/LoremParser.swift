@@ -149,7 +149,7 @@ class LoremParser {
     
     func readAllSentences() -> [Sentence] {
         var sentences: [Sentence] = []
-        for i in 0...15 {
+        for i in 0...1 {
             var rawString = LoremParser.readLorem(i)!
             let moreSentences = self.parseSentences(rawString)
             sentences = sentences + moreSentences

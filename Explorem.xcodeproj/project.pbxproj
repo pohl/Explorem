@@ -34,6 +34,21 @@
 		572133CD1989EEB900A1F6FB /* loremipsum13.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum13.txt; sourceTree = "<group>"; };
 		572133CE1989EEB900A1F6FB /* loremipsum14.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum14.txt; sourceTree = "<group>"; };
 		572133CF1989EEB900A1F6FB /* loremipsum15.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = loremipsum15.txt; sourceTree = "<group>"; };
+		572133D0198B2ECE00A1F6FB /* loremipsum16.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum16.txt; sourceTree = "<group>"; };
+		572133D1198B2ECE00A1F6FB /* loremipsum17.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum17.txt; sourceTree = "<group>"; };
+		572133D2198B2ECE00A1F6FB /* loremipsum18.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum18.txt; sourceTree = "<group>"; };
+		572133D3198B2ECE00A1F6FB /* loremipsum19.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum19.txt; sourceTree = "<group>"; };
+		572133D4198B2ECE00A1F6FB /* loremipsum20.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum20.txt; sourceTree = "<group>"; };
+		572133D5198B2ECE00A1F6FB /* loremipsum21.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum21.txt; sourceTree = "<group>"; };
+		572133D6198B2ECE00A1F6FB /* loremipsum22.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum22.txt; sourceTree = "<group>"; };
+		572133D7198B2ECE00A1F6FB /* loremipsum23.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum23.txt; sourceTree = "<group>"; };
+		572133D8198B2ECE00A1F6FB /* loremipsum24.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum24.txt; sourceTree = "<group>"; };
+		572133D9198B2ECE00A1F6FB /* loremipsum25.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum25.txt; sourceTree = "<group>"; };
+		572133DA198B2ECE00A1F6FB /* loremipsum26.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum26.txt; sourceTree = "<group>"; };
+		572133DB198B2ECE00A1F6FB /* loremipsum27.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum27.txt; sourceTree = "<group>"; };
+		572133DC198B2ECE00A1F6FB /* loremipsum28.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum28.txt; sourceTree = "<group>"; };
+		572133DD198B2ECE00A1F6FB /* loremipsum29.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum29.txt; sourceTree = "<group>"; };
+		572133DE198B2ECE00A1F6FB /* loremipsum30.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum30.txt; sourceTree = "<group>"; };
 		5764DC141985D15200B03159 /* Explorem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Explorem; sourceTree = BUILT_PRODUCTS_DIR; };
 		5764DC171985D15200B03159 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5764DC1E1985D2B600B03159 /* LoremParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoremParser.swift; sourceTree = "<group>"; };
@@ -85,6 +100,21 @@
 				572133CD1989EEB900A1F6FB /* loremipsum13.txt */,
 				572133CE1989EEB900A1F6FB /* loremipsum14.txt */,
 				572133CF1989EEB900A1F6FB /* loremipsum15.txt */,
+				572133D0198B2ECE00A1F6FB /* loremipsum16.txt */,
+				572133D1198B2ECE00A1F6FB /* loremipsum17.txt */,
+				572133D2198B2ECE00A1F6FB /* loremipsum18.txt */,
+				572133D3198B2ECE00A1F6FB /* loremipsum19.txt */,
+				572133D4198B2ECE00A1F6FB /* loremipsum20.txt */,
+				572133D5198B2ECE00A1F6FB /* loremipsum21.txt */,
+				572133D6198B2ECE00A1F6FB /* loremipsum22.txt */,
+				572133D7198B2ECE00A1F6FB /* loremipsum23.txt */,
+				572133D8198B2ECE00A1F6FB /* loremipsum24.txt */,
+				572133D9198B2ECE00A1F6FB /* loremipsum25.txt */,
+				572133DA198B2ECE00A1F6FB /* loremipsum26.txt */,
+				572133DB198B2ECE00A1F6FB /* loremipsum27.txt */,
+				572133DC198B2ECE00A1F6FB /* loremipsum28.txt */,
+				572133DD198B2ECE00A1F6FB /* loremipsum29.txt */,
+				572133DE198B2ECE00A1F6FB /* loremipsum30.txt */,
 			);
 			sourceTree = "<group>";
 		};
