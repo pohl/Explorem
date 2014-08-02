@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		572133C919874A9200A1F6FB /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572133C819874A9200A1F6FB /* Timer.swift */; };
+		572133E0198C8D5600A1F6FB /* MarkovModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572133DF198C8D5600A1F6FB /* MarkovModel.swift */; };
 		5764DC181985D15200B03159 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764DC171985D15200B03159 /* main.swift */; };
 		5764DC211985D2B600B03159 /* LoremParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764DC1E1985D2B600B03159 /* LoremParser.swift */; };
 		5764DC221985D2B600B03159 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5764DC1F1985D2B600B03159 /* Models.swift */; };
@@ -49,6 +50,7 @@
 		572133DC198B2ECE00A1F6FB /* loremipsum28.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum28.txt; sourceTree = "<group>"; };
 		572133DD198B2ECE00A1F6FB /* loremipsum29.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum29.txt; sourceTree = "<group>"; };
 		572133DE198B2ECE00A1F6FB /* loremipsum30.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loremipsum30.txt; sourceTree = "<group>"; };
+		572133DF198C8D5600A1F6FB /* MarkovModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkovModel.swift; sourceTree = "<group>"; };
 		5764DC141985D15200B03159 /* Explorem */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Explorem; sourceTree = BUILT_PRODUCTS_DIR; };
 		5764DC171985D15200B03159 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5764DC1E1985D2B600B03159 /* LoremParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoremParser.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				5764DC1E1985D2B600B03159 /* LoremParser.swift */,
 				5764DC1F1985D2B600B03159 /* Models.swift */,
 				5764DC201985D2B600B03159 /* Multiset.swift */,
+				572133DF198C8D5600A1F6FB /* MarkovModel.swift */,
 			);
 			path = Explorem;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 				5764DC211985D2B600B03159 /* LoremParser.swift in Sources */,
 				572133C919874A9200A1F6FB /* Timer.swift in Sources */,
 				5764DC181985D15200B03159 /* main.swift in Sources */,
+				572133E0198C8D5600A1F6FB /* MarkovModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
