@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Pohl Longsine. All rights reserved.
 
 
-struct Multiset<T: Hashable>: Sequence, Equatable {
+struct Multiset<T: Hashable>: SequenceType, Equatable {
     
     var dictionary: Dictionary<T,Int> = [:]
     

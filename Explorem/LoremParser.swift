@@ -80,7 +80,7 @@ extension NSScanner {
     func nextPhrase() -> ([Token],Punctuation)? {
         var result: [Token] = []
         var punctuation: Punctuation? = nil
-        while !punctuation {
+        while punctuation == nil {
             self.advanceToNextWord()
             var buffer: NSString?  = nil
             let foundWord = self.scanUpToCharactersFromSet(wordTerminators, intoString: &buffer)
@@ -103,7 +103,7 @@ extension NSScanner {
         var tuple: ([Token],Punctuation)? = nil
         outerLoop: while true {
             tuple = nextPhrase()
-            if tuple {
+            if tuple != nil {
                 let (phrase, punctuation) = tuple!
                 tokens = tokens + phrase
                 tokens.append(Token.Punctuation(punctuation.description))
@@ -149,7 +149,7 @@ class LoremParser {
     
     func readAllSentences() -> [Sentence] {
         var sentences: [Sentence] = []
-        for i in 0...1 {
+        for i in 0...9 {
             var rawString = LoremParser.readLorem(i)!
             let moreSentences = self.parseSentences(rawString)
             sentences = sentences + moreSentences
