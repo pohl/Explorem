@@ -6,20 +6,27 @@
 //  Copyright (c) 2014 the screaming organization. All rights reserved.
 //
 
-struct State: Printable, Equatable, Hashable {
+import Foundation
+
+public struct State: Printable, Equatable, Hashable {
     let penultimate: String?
     let ultimate: String?
     
-    init(p: String, u: String) {
-        penultimate = p
-        ultimate = u
+    init(penultimate: String?, ultimate: String?) {
+        self.penultimate = penultimate
+        self.ultimate = ultimate
     }
     
-    var description: String {
+    init() {
+        self.penultimate = nil
+        self.ultimate = nil
+    }
+    
+    public var description: String {
         return "(\(penultimate),\(ultimate))"
     }
     
-    var hashValue: Int {
+    public var hashValue: Int {
         var hashCode = 1
         if let p = penultimate {
             hashCode = 31 &* hashCode &+ p.hashValue
@@ -32,6 +39,31 @@ struct State: Printable, Equatable, Hashable {
     
 }
 
-func == (lhs: State, rhs: State) -> Bool {
+public func == (lhs: State, rhs: State) -> Bool {
     return lhs.penultimate == rhs.penultimate && lhs.ultimate == rhs.ultimate
+}
+
+public class StateEdges {
+    private var subsequentWords: Multiset<String> = Multiset()
+    private var total: UInt32 = 0;
+    
+    init() {
+    }
+    
+    func addWord(word: String) {
+        subsequentWords.add(word);
+        total++;
+    }
+    
+    func nextState(current: State) -> State {
+        let randomNumber = Int(arc4random_uniform(total))
+        var n = 0;
+        for (word, count) in subsequentWords {
+            n = n + count;
+            if (n > randomNumber) {
+                return State(penultimate: current.ultimate, ultimate: word)
+            }
+        }
+        return State()
+    }
 }
