@@ -1,5 +1,3 @@
-import Foundation
-
 //  LoremParser.swift
 //  SeinfeldChain
 //
@@ -8,10 +6,10 @@ import Foundation
 //
 import Foundation
 
-let alphanumeric = NSCharacterSet.alphanumericCharacterSet();
-let whitespace = NSCharacterSet.whitespaceAndNewlineCharacterSet()
-let comma = NSMutableCharacterSet(charactersInString: ",")
-let wordTerminators = NSMutableCharacterSet(charactersInString: ".,; \n")
+let alphanumeric = NSCharacterSet.alphanumerics;
+let whitespace = NSCharacterSet.whitespacesAndNewlines
+let comma = NSMutableCharacterSet(charactersIn: ",")
+let wordTerminators = NSMutableCharacterSet(charactersIn: ".,; \n")
 
 enum Punctuation: String {
     case Comma = "comma"
@@ -37,21 +35,21 @@ enum Punctuation: String {
     
 }
 
-extension NSScanner {
+extension Scanner {
     
     func advanceToNextWord() -> Bool {
         var buffer: NSString?  = nil
-        return self.scanUpToCharactersFromSet(alphanumeric, intoString: &buffer)
+        return self.scanUpToCharacters(from: alphanumeric, into: &buffer)
     }
     
     func atPunctuation() -> Bool {
         var buffer: NSString?  = nil
-        return self.scanUpToCharactersFromSet(alphanumeric, intoString: &buffer)
+        return self.scanUpToCharacters(from: alphanumeric, into: &buffer)
     }
     
     func checkForPunctuation() -> Punctuation? {
         var buffer: NSString?  = nil
-        let foundCharacters = self.scanUpToCharactersFromSet(whitespace, intoString: &buffer)
+        let foundCharacters = self.scanUpToCharacters(from: whitespace, into: &buffer)
         if foundCharacters {
             if "," == buffer {
                 return Punctuation.Comma
@@ -69,9 +67,9 @@ extension NSScanner {
     
     func checkForWord() -> Token? {
         var buffer: NSString?  = nil
-        let foundWord = self.scanUpToCharactersFromSet(wordTerminators, intoString: &buffer)
+        let foundWord = self.scanUpToCharacters(from: wordTerminators as CharacterSet, into: &buffer)
         if foundWord {
-            return Token.Word(buffer!.lowercaseString)
+            return Token.Word(buffer!.lowercased)
         } else {
             return nil
         }
@@ -83,9 +81,9 @@ extension NSScanner {
         while punctuation == nil {
             self.advanceToNextWord()
             var buffer: NSString?  = nil
-            let foundWord = self.scanUpToCharactersFromSet(wordTerminators, intoString: &buffer)
+            let foundWord = self.scanUpToCharacters(from: wordTerminators as CharacterSet, into: &buffer)
             if foundWord {
-                result.append(Token.Word(buffer!.lowercaseString))
+                result.append(Token.Word(buffer!.lowercased))
                 punctuation = checkForPunctuation()
             } else {
                 punctuation = Punctuation.None
@@ -126,15 +124,25 @@ extension NSScanner {
 
 class LoremParser {
     
+    @available(OSX 10.12, *)
     class func readLorem(index: Int) -> String? {
-        var error: NSError? = nil
-        var lorem: String? = String.stringWithContentsOfFile("loremipsum\(index).txt", encoding: NSUTF8StringEncoding, error: &error)
+        
+        let filename = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Code")
+            .appendingPathComponent("Explorem")
+            .appendingPathComponent("Resources")
+            .appendingPathComponent("loremipsum\(index).txt")
+        var lorem: String? = nil
+        do {
+            lorem = try String(contentsOf: filename, encoding: String.Encoding.utf8)
+        } catch {
+            NSLog("yo")
+        }
         return lorem
     }
     
     func parseSentences(string: String) -> [Sentence] {
-        let scanner = NSScanner(string: string)
-        var buffer: NSString?  = nil
+        let scanner = Scanner(string: string)
         scanner.charactersToBeSkipped = nil
         var sentences: [Sentence] = []
         while true {
@@ -147,11 +155,13 @@ class LoremParser {
         return sentences
     }
     
+    @available(OSX 10.12, *)
     func readAllSentences() -> [Sentence] {
         var sentences: [Sentence] = []
         for i in 0...9 {
-            var rawString = LoremParser.readLorem(i)!
-            let moreSentences = self.parseSentences(rawString)
+            
+            let rawString = LoremParser.readLorem(index: i)!
+            let moreSentences = self.parseSentences(string: rawString)
             sentences = sentences + moreSentences
         }
         return sentences

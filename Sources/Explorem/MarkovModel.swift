@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct State: Printable, Equatable, Hashable {
+public struct State: CustomStringConvertible, Equatable, Hashable {
     let penultimate: String?
     let ultimate: String?
     
@@ -23,20 +23,13 @@ public struct State: Printable, Equatable, Hashable {
     }
     
     public var description: String {
-        return "(\(penultimate),\(ultimate))"
+        return "(\(penultimate ?? ""),\(ultimate ?? ""))"
     }
     
-    public var hashValue: Int {
-        var hashCode = 1
-        if let p = penultimate {
-            hashCode = 31 &* hashCode &+ p.hashValue
-        }
-        if let t = penultimate {
-            hashCode = 31 &* hashCode &+ t.hashValue
-        }
-        return hashCode
-    }
-    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(penultimate)
+        hasher.combine(ultimate)
+    }    
 }
 
 public func == (lhs: State, rhs: State) -> Bool {
@@ -51,8 +44,8 @@ public class StateEdges {
     }
     
     func addWord(word: String) {
-        subsequentWords.add(word);
-        total++;
+        subsequentWords.add(item: word);
+        total = total + 1;
     }
     
     func nextState(current: State) -> State {

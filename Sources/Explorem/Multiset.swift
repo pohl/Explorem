@@ -1,7 +1,7 @@
 //  Copyright (c) 2014 Pohl Longsine. All rights reserved.
 
 
-struct Multiset<T: Hashable>: SequenceType, Equatable {
+struct Multiset<T: Hashable>: Sequence, Equatable {
     
     var dictionary: Dictionary<T,Int> = [:]
     
@@ -21,9 +21,13 @@ struct Multiset<T: Hashable>: SequenceType, Equatable {
         }
     }
     
-    func generate() -> DictionaryGenerator<T,Int> {
-        return dictionary.generate()
+    func makeIterator() -> DictionaryIterator<T,Int> {
+        return dictionary.makeIterator()
     }
+    
+//    func generate() -> DictionaryGenerator<T,Int> {
+//        return dictionary.generate()
+//    }
     
     subscript (i: T) -> Int? {
         get {

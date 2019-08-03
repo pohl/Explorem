@@ -22,12 +22,12 @@ enum Token: Equatable, Hashable {
         }
     }
     
-    var hashValue: Int {
+    func hash(into hasher: inout Hasher) {
         switch self {
         case .Word(let w):
-            return w.hashValue
+            hasher.combine(w.hashValue)
         case .Punctuation(let p):
-            return p.hashValue
+            hasher.combine(p.hashValue)
         }
     }
     
@@ -53,7 +53,7 @@ func == (lhs: Token, rhs: Token) -> Bool {
     }
 }
 
-struct Sentence: Printable, Equatable, Hashable {
+struct Sentence: CustomStringConvertible, Equatable, Hashable {
     var tokens:[Token]
     
     init(fromTokens t: [Token]) {
@@ -69,16 +69,12 @@ struct Sentence: Printable, Equatable, Hashable {
     }
     
     var description: String {
-        return NSArray.componentsJoinedByString(tokens.map { $0.description })(" | ")
+        return tokens.map { $0.description }.joined(separator: " | ")
         //return "sentence has \(phrases.count) phrases"
     }
     
-    var hashValue: Int {
-        var hashCode = 1
-        for t in tokens {
-            hashCode = 31 &* hashCode &+ t.hashValue
-        }
-        return hashCode
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(tokens)
     }
     
 }

@@ -8,10 +8,10 @@
 
 import Foundation
 
-func stopwatch(block: Void -> Void) -> Double {
+func stopwatch(block: () -> Void) -> Double {
     var start = NSDate()
     block()
     var end = NSDate()
-    var timeTaken = end.timeIntervalSinceDate(start) * 1000
+    let timeTaken = end.timeIntervalSince(start as Date) * 1000
     return timeTaken
 }

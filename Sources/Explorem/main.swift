@@ -8,21 +8,23 @@
 
 import Foundation
 
+@available(OSX 10.12, *)
 func run() -> () {
     let parser = LoremParser()
     let sentences: [Sentence] = parser.readAllSentences()
+
     let elapsed = stopwatch {
         var sentenceCounts = Multiset<Sentence>()
         var wordCounts = Multiset<String>()
         for sentence in sentences {
-            sentenceCounts.add(sentence)
+            sentenceCounts.add(item: sentence)
             for word in sentence.words {
-                wordCounts.add(word)
+                wordCounts.add(item: word)
             }
         }
         for (key, value) in sentenceCounts {
             if value != 1 {
-                println("\(value) occurrences of sentence \(key)")
+                print("\(value) occurrences of sentence \(key)")
             }
         }
         //            for (key, value) in phraseCounts {
@@ -33,15 +35,19 @@ func run() -> () {
         
         for (key, value) in wordCounts {
             if value != 0 {
-                println("\(value) occurrences of word: \(key)")
+                print("\(value) occurrences of word: \(key)")
             }
         }
-        println("\(wordCounts.dictionary.count) unique words in sample");
+        print("\(wordCounts.dictionary.count) unique words in sample");
     }
-    println("elapsed == \(elapsed)")
+    print("elapsed == \(elapsed)")
 }
 
-run()
+if #available(OSX 10.12, *) {
+    run()
+} else {
+    // Fallback on earlier versions
+}
 
 
 
