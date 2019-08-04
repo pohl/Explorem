@@ -79,7 +79,7 @@ extension Scanner {
         var result: [Token] = []
         var punctuation: Punctuation? = nil
         while punctuation == nil {
-            self.advanceToNextWord()
+            let _ = self.advanceToNextWord()
             var buffer: NSString?  = nil
             let foundWord = self.scanUpToCharacters(from: wordTerminators as CharacterSet, into: &buffer)
             if foundWord {
@@ -158,7 +158,7 @@ class LoremParser {
     @available(OSX 10.12, *)
     func readAllSentences() -> [Sentence] {
         var sentences: [Sentence] = []
-        for i in 0...9 {
+        for i in 0...30 {
             
             let rawString = LoremParser.readLorem(index: i)!
             let moreSentences = self.parseSentences(string: rawString)

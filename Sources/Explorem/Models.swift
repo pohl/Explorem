@@ -61,16 +61,27 @@ struct Sentence: CustomStringConvertible, Equatable, Hashable {
     }
     
     var words: [String] {
-    return tokens.filter {
-        t in t.isWord
-        }.map {
-            $0.description
-        }    
+        return tokens
+            .filter { $0.isWord }
+            .map { $0.description }
+    }
+    
+    var phrases: [Phrase] {
+        var phrases:[Phrase] = []
+        var buffer:[Token] = []
+        for token in tokens {
+            buffer.append(token)
+            if !token.isWord {
+                let phrase = Phrase(fromTokens: buffer)
+                phrases.append(phrase)
+                buffer = []
+            }
+        }
+        return phrases
     }
     
     var description: String {
-        return tokens.map { $0.description }.joined(separator: " | ")
-        //return "sentence has \(phrases.count) phrases"
+        return tokens.map { $0.description }.joined(separator: " ")
     }
     
     func hash(into hasher: inout Hasher) {
@@ -79,7 +90,26 @@ struct Sentence: CustomStringConvertible, Equatable, Hashable {
     
 }
 
-func == (lhs: Sentence, rhs: Sentence) -> Bool {
-    return lhs.tokens == rhs.tokens
+struct Phrase: CustomStringConvertible, Equatable, Hashable {
+    var tokens:[Token]
+    
+    init(fromTokens t: [Token]) {
+        tokens = t
+    }
+    
+    var words: [String] {
+        return tokens
+            .filter { $0.isWord }
+            .map { $0.description }
+    }
+    
+    var description: String {
+        return tokens.map { $0.description }.joined(separator: " ")
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(tokens)
+    }
 }
+
 

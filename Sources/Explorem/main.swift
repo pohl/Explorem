@@ -15,30 +15,37 @@ func run() -> () {
 
     let elapsed = stopwatch {
         var sentenceCounts = Multiset<Sentence>()
+        var phraseCounts = Multiset<Phrase>()
         var wordCounts = Multiset<String>()
         for sentence in sentences {
             sentenceCounts.add(item: sentence)
+            for phrase in sentence.phrases {
+                phraseCounts.add(item: phrase)
+            }
             for word in sentence.words {
                 wordCounts.add(item: word)
             }
         }
-        for (key, value) in sentenceCounts {
-            if value != 1 {
-                print("\(value) occurrences of sentence \(key)")
-            }
+        let sortedSentences = sentenceCounts
+            .dictionary
+            .sorted(by: { $0.0.tokens.count < $1.0.tokens.count })
+            .sorted(by: { $0.1 < $1.1 })
+//        for (key, value) in sortedSentences {
+//            print("\(value): \(key)")
+//        }
+//        let sortedWords = wordCounts.dictionary.sorted(by: { $0.1 < $1.1 })
+//        for (key, value) in sortedWords {
+//            print("\(value): \(key)")
+//        }
+//        print("\(wordCounts.dictionary.count) unique words in sample");
+        let sortedPhrases = phraseCounts
+            .dictionary
+            .sorted(by: { $0.0.tokens.count < $1.0.tokens.count })
+            .sorted(by: { $0.1 < $1.1 })
+        for (key, value) in sortedPhrases {
+            print("\(value): \(key)")
         }
-        //            for (key, value) in phraseCounts {
-        //                if value != 1 {
-        //                    println("\(value) occurrences of phrase: \(key)")
-        //                }
-        //            }
-        
-        for (key, value) in wordCounts {
-            if value != 0 {
-                print("\(value) occurrences of word: \(key)")
-            }
-        }
-        print("\(wordCounts.dictionary.count) unique words in sample");
+        print("\(phraseCounts.dictionary.count) unique phrases in sample");
     }
     print("elapsed == \(elapsed)")
 }

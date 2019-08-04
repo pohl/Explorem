@@ -9,9 +9,9 @@
 import Foundation
 
 func stopwatch(block: () -> Void) -> Double {
-    var start = NSDate()
+    let start = NSDate()
     block()
-    var end = NSDate()
+    let end = NSDate()
     let timeTaken = end.timeIntervalSince(start as Date) * 1000
     return timeTaken
 }
