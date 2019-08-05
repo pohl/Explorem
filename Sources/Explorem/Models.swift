@@ -84,6 +84,20 @@ struct Sentence: CustomStringConvertible, Equatable, Hashable {
         return tokens.map { $0.description }.joined(separator: " ")
     }
     
+    var asSourceArray: String {
+        var buffer = "let sentence:[Token] = [\n"
+        for token in tokens {
+            switch token {
+            case .Word(let w):
+                buffer.append(".Word(\"\(w)\"),\n")
+            case .Punctuation(let p):
+                buffer.append(".Punctuation(\"\(p)\"),\n")
+            }
+        }
+        buffer.append("]\n")
+        return buffer
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(tokens)
     }

@@ -6,17 +6,17 @@
 //
 import Foundation
 
-let alphanumeric = NSCharacterSet.alphanumerics;
+let alphanumeric = NSCharacterSet.alphanumerics
 let whitespace = NSCharacterSet.whitespacesAndNewlines
 let comma = NSMutableCharacterSet(charactersIn: ",")
 let wordTerminators = NSMutableCharacterSet(charactersIn: ".,; \n")
 
-enum Punctuation: String {
-    case Comma = "comma"
-    case Period = "period"
-    case Semicolon = "semicolon"
-    case Unknown = "unknown"
-    case None = "none"
+enum Punctuation {
+    case Comma
+    case Period
+    case Semicolon
+    case Unknown
+    case None
     
     var description: String {
         switch self {
@@ -61,7 +61,7 @@ extension Scanner {
                 return Punctuation.Unknown
             }
         } else {
-            return nil;
+            return nil
         }
     }
     
@@ -149,7 +149,7 @@ class LoremParser {
             if let sentence = scanner.nextSentence() {
                 sentences.append(sentence)
             } else {
-                break;
+                break
             }
         }
         return sentences

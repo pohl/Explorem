@@ -38,21 +38,21 @@ public func == (lhs: State, rhs: State) -> Bool {
 
 public class StateEdges {
     private var subsequentWords: Multiset<String> = Multiset()
-    private var total: UInt32 = 0;
+    private var total: UInt32 = 0
     
     init() {
     }
     
     func addWord(word: String) {
-        subsequentWords.add(item: word);
-        total = total + 1;
+        subsequentWords.add(item: word)
+        total = total + 1
     }
     
     func nextState(current: State) -> State {
         let randomNumber = Int(arc4random_uniform(total))
-        var n = 0;
+        var n = 0
         for (word, count) in subsequentWords {
-            n = n + count;
+            n = n + count
             if (n > randomNumber) {
                 return State(penultimate: current.ultimate, ultimate: word)
             }
