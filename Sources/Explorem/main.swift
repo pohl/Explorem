@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension Int {
+    func percent(of total: Int) -> Int {
+        return (self * 200 + total)/(2 * total)
+    }
+}
+
 private func displaySentences(_ sentenceCounts: Multiset<Sentence>) {
     let sortedSentences = sentenceCounts
         .dictionary
@@ -19,23 +25,27 @@ private func displaySentences(_ sentenceCounts: Multiset<Sentence>) {
 
 private func displaySentenceLengths(_ sentenceCounts: Multiset<Sentence>) {
     var sentenceLengths = Multiset<Int>()
-    for (key, _) in sentenceCounts {
+    var total = 0
+    for (key, value) in sentenceCounts {
         sentenceLengths.add(item: key.words.count)
+        total += value
     }
     let sortedLengths = sentenceLengths.dictionary.sorted(by: { $0.0 < $1.0 })
     for (key, value) in sortedLengths {
-        print("\(key): \(value)")
+        print("\(key): \(value.percent(of: total))")
     }
 }
 
 private func displayPhraseLengths(_ phraseCounts: Multiset<Phrase>) {
     var lengths = Multiset<Int>()
-    for (key, _) in phraseCounts {
+    var total = 0
+    for (key, value) in phraseCounts {
         lengths.add(item: key.words.count)
+        total += value
     }
     let sortedLengths = lengths.dictionary.sorted(by: { $0.0 < $1.0 })
     for (key, value) in sortedLengths {
-        print("\(key): \(value)")
+        print("\(key): \(value.percent(of: total))")
     }
 }
 
@@ -79,10 +89,10 @@ func run() -> () {
             }
         }
         //displaySentences(sentenceCounts)
-        //displaySentenceLengths(sentenceCounts)
+        displaySentenceLengths(sentenceCounts)
         //displayWords(wordCounts)
         //displayPhrases(phraseCounts)
-        displayPhraseLengths(phraseCounts)
+        //displayPhraseLengths(phraseCounts)
 
     }
     print("elapsed == \(elapsed)")
