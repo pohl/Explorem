@@ -9,7 +9,11 @@
 import Foundation
 
 
-enum Token: Equatable, Hashable {
+protocol HasWords: Equatable, Hashable {
+    var words: [String] { get }    
+}
+
+enum Token: Hashable {
     case Word(String)
     case Punctuation(String)
     
@@ -53,7 +57,7 @@ func == (lhs: Token, rhs: Token) -> Bool {
     }
 }
 
-struct Sentence: CustomStringConvertible, Equatable, Hashable {
+struct Sentence: CustomStringConvertible, HasWords {
     var tokens:[Token]
     
     init(fromTokens t: [Token]) {
@@ -104,7 +108,7 @@ struct Sentence: CustomStringConvertible, Equatable, Hashable {
     
 }
 
-struct Phrase: CustomStringConvertible, Equatable, Hashable {
+struct Phrase: CustomStringConvertible, HasWords {
     var tokens:[Token]
     
     init(fromTokens t: [Token]) {
@@ -123,6 +127,25 @@ struct Phrase: CustomStringConvertible, Equatable, Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(tokens)
+    }
+}
+
+extension HasWords {
+    func findRepeatedWords() -> Set<String> {
+        let words = self.words
+        var wordsUsed: Set<String> = Set()
+        var repeatedWords: Set<String> = Set()
+        for word in words {
+            if wordsUsed.contains(word) {
+                repeatedWords.insert(word)
+            }
+            wordsUsed.insert(word)
+        }
+        return repeatedWords
+    }
+    
+    func hasRepatedWords() -> Bool {
+        return findRepeatedWords().count != 0
     }
 }
 

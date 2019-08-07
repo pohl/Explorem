@@ -23,23 +23,10 @@ private func displaySentences(_ sentenceCounts: Multiset<Sentence>) {
     }
 }
 
-private func displaySentenceLengths(_ sentenceCounts: Multiset<Sentence>) {
-    var sentenceLengths = Multiset<Int>()
-    var total = 0
-    for (key, value) in sentenceCounts {
-        sentenceLengths.add(item: key.words.count)
-        total += value
-    }
-    let sortedLengths = sentenceLengths.dictionary.sorted(by: { $0.0 < $1.0 })
-    for (key, value) in sortedLengths {
-        print("\(key): \(value.percent(of: total))")
-    }
-}
-
-private func displayPhraseLengths(_ phraseCounts: Multiset<Phrase>) {
+private func displayLengths<T>(_ counts: Multiset<T>) where T: HasWords {
     var lengths = Multiset<Int>()
     var total = 0
-    for (key, value) in phraseCounts {
+    for (key, value) in counts {
         lengths.add(item: key.words.count)
         total += value
     }
@@ -68,6 +55,19 @@ private func displayPhrases(_ phraseCounts: Multiset<Phrase>) {
     print("\(phraseCounts.dictionary.count) unique phrases in sample")
 }
 
+private func displayRepeats<T>(_ counts: Multiset<T>) where T: HasWords {
+    var repeats = Multiset<String>()
+    for (key, _) in counts {
+        repeats.add(items: key.findRepeatedWords())
+    }
+    let sortedRepeats = repeats
+        .dictionary
+        .sorted(by: { $0.1 < $1.1 })
+    for (key, value) in sortedRepeats {
+        print("\(value): \(key)")
+    }
+}
+
 @available(OSX 10.12, *)
 func run() -> () {
     let parser = LoremParser()
@@ -89,10 +89,12 @@ func run() -> () {
             }
         }
         //displaySentences(sentenceCounts)
-        displaySentenceLengths(sentenceCounts)
+        //displayLengths(sentenceCounts)
+        //displayRepeats(sentenceCounts)
         //displayWords(wordCounts)
         //displayPhrases(phraseCounts)
-        //displayPhraseLengths(phraseCounts)
+        //displayLengths(phraseCounts)
+        displayRepeats(sentenceCounts)
 
     }
     print("elapsed == \(elapsed)")

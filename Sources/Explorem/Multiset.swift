@@ -12,6 +12,12 @@ struct Multiset<T: Hashable>: Sequence, Equatable {
             dictionary.updateValue(1, forKey: item)
         }
     }
+
+    mutating func add(items: Set<T>) -> () {
+        for item in items {
+            self.add(item: item)
+        }
+    }
     
     func count(item: T) -> Int {
         if let currentCount = dictionary[item] {
