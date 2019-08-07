@@ -75,7 +75,7 @@ func run() -> () {
         .readAllSentences()
         .filter( {!cannedSentences.contains($0) })
 
-    let elapsed = stopwatch {
+    printMeasurement(title: "main", operation: {
         var sentenceCounts = Multiset<Sentence>()
         var phraseCounts = Multiset<Phrase>()
         var wordCounts = Multiset<String>()
@@ -96,8 +96,7 @@ func run() -> () {
         //displayLengths(phraseCounts)
         displayRepeats(sentenceCounts)
 
-    }
-    print("elapsed == \(elapsed)")
+    })
 }
 
 if #available(OSX 10.15, *) {

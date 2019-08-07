@@ -8,10 +8,15 @@
 
 import Foundation
 
-func stopwatch(block: () -> Void) -> Double {
-    let start = Date()
-    block()
-    let end = Date()
-    let timeTaken = end.timeIntervalSince(start) * 1000
-    return timeTaken
+func printMeasurement(title:String, operation:()->()) {
+    let measurement = measure(operation: operation)
+    let timeElapsed = Double(round(100*measurement)/100)
+    print("Time elapsed for \(title): \(timeElapsed)s")
+}
+
+func measure (operation: ()->()) -> Double {
+    let startTime = CFAbsoluteTimeGetCurrent()
+    operation()
+    let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+    return Double(timeElapsed)
 }
