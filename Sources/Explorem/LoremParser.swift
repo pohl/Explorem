@@ -97,14 +97,15 @@ extension Scanner {
     }
     
     func nextSentence() -> Sentence? {
-        var tokens: [Token] = []
+        var phrases: [Phrase] = []
         var tuple: ([Token],Punctuation)? = nil
         outerLoop: while true {
             tuple = nextPhrase()
             if tuple != nil {
-                let (phrase, punctuation) = tuple!
-                tokens = tokens + phrase
+                let (wordTokens, punctuation) = tuple!
+                var tokens: [Token] = wordTokens
                 tokens.append(Token.Punctuation(punctuation.description))
+                phrases.append(Phrase(fromTokens: tokens))
                 switch punctuation {
                 case .Comma:
                     continue
@@ -115,7 +116,7 @@ extension Scanner {
                 break outerLoop
             }
         }
-        return tokens.count != 0 ? Sentence(fromTokens: tokens) : nil
+        return phrases.count != 0 ? Sentence(fromPhrases: phrases) : nil
     }
 
     
@@ -154,12 +155,11 @@ class LoremParser {
         }
         return sentences
     }
-    
+
     @available(OSX 10.12, *)
     func readAllSentences() -> [Sentence] {
         var sentences: [Sentence] = []
-        for i in 0...30 {
-            
+        for i in 0...30 {            
             let rawString = LoremParser.readLorem(index: i)!
             let moreSentences = self.parseSentences(string: rawString)
             sentences = sentences + moreSentences

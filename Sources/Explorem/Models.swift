@@ -9,7 +9,7 @@
 import Foundation
 
 
-protocol HasWords: Equatable, Hashable {
+protocol HasWords: Hashable {
     var words: [String] { get }    
 }
 
@@ -57,6 +57,29 @@ func == (lhs: Token, rhs: Token) -> Bool {
     }
 }
 
+struct Phrase: CustomStringConvertible, HasWords {
+    var tokens:[Token]
+    
+    init(fromTokens t: [Token]) {
+        tokens = t
+    }
+    
+    var words: [String] {
+        return tokens
+            .filter { $0.isWord }
+            .map { $0.description }
+    }
+    
+    var description: String {
+        return tokens.map { $0.description }.joined(separator: " ")
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(tokens)
+    }
+}
+
+/*
 struct Sentence: CustomStringConvertible, HasWords {
     var tokens:[Token]
     
@@ -107,18 +130,25 @@ struct Sentence: CustomStringConvertible, HasWords {
     }
     
 }
+ */
 
-struct Phrase: CustomStringConvertible, HasWords {
-    var tokens:[Token]
+struct Sentence: CustomStringConvertible, HasWords {
+    var phrases:[Phrase]
     
-    init(fromTokens t: [Token]) {
-        tokens = t
+    init(fromPhrases p: [Phrase]) {
+        phrases = p
+    }
+    
+    var tokens: [Token] {
+        return phrases
+            .map { $0.tokens }
+            .flatMap { $0 }
     }
     
     var words: [String] {
-        return tokens
-            .filter { $0.isWord }
-            .map { $0.description }
+        return phrases
+            .map { $0.words }
+            .flatMap { $0 }
     }
     
     var description: String {
@@ -126,8 +156,8 @@ struct Phrase: CustomStringConvertible, HasWords {
     }
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(tokens)
-    }
+        hasher.combine(phrases)
+    }    
 }
 
 extension HasWords {
