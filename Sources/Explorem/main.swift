@@ -68,7 +68,7 @@ private func displayRepeats<T>(_ counts: Multiset<T>) where T: HasWords {
     }
 }
 
-@available(OSX 10.12, *)
+@available(OSX 10.15, *)
 func run() -> () {
     let parser = LoremParser()
     let sentences: [Sentence] = parser
@@ -100,7 +100,7 @@ func run() -> () {
     print("elapsed == \(elapsed)")
 }
 
-if #available(OSX 10.12, *) {
+if #available(OSX 10.15, *) {
     run()
 } else {
     // Fallback on earlier versions

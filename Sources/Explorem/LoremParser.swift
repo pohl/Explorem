@@ -6,10 +6,11 @@
 //
 import Foundation
 
-let alphanumeric = NSCharacterSet.alphanumerics
-let whitespace = NSCharacterSet.whitespacesAndNewlines
-let comma = NSMutableCharacterSet(charactersIn: ",")
-let wordTerminators = NSMutableCharacterSet(charactersIn: ".,; \n")
+let alphanumeric = CharacterSet.alphanumerics
+let whitespace = CharacterSet.whitespacesAndNewlines
+let comma = CharacterSet(charactersIn: ",")
+let wordTerminators = CharacterSet(charactersIn: ".,; ")
+//let paragraphTerminators = CharacterSet(charactersIn: "\n")
 
 enum Punctuation {
     case Comma
@@ -35,27 +36,25 @@ enum Punctuation {
     
 }
 
+@available(OSX 10.15, *)
 extension Scanner {
     
-    func advanceToNextWord() -> Bool {
-        var buffer: NSString?  = nil
-        return self.scanUpToCharacters(from: alphanumeric, into: &buffer)
+    func advanceToNextWord() -> String? {
+        return self.scanUpToCharacters(from: alphanumeric)
     }
     
-    func atPunctuation() -> Bool {
-        var buffer: NSString?  = nil
-        return self.scanUpToCharacters(from: alphanumeric, into: &buffer)
+    func atPunctuation() -> String? {
+        return self.scanUpToCharacters(from: alphanumeric)
     }
     
     func checkForPunctuation() -> Punctuation? {
-        var buffer: NSString?  = nil
-        let foundCharacters = self.scanUpToCharacters(from: whitespace, into: &buffer)
-        if foundCharacters {
-            if "," == buffer {
+        let string = self.scanUpToCharacters(from: whitespace)
+        if let string = string {
+            if "," == string {
                 return Punctuation.Comma
-            } else if "." == buffer {
+            } else if "." == string {
                 return Punctuation.Period
-            } else if ";" == buffer {
+            } else if ";" == string {
                 return Punctuation.Semicolon
             } else {
                 return Punctuation.Unknown
@@ -66,10 +65,9 @@ extension Scanner {
     }
     
     func checkForWord() -> Token? {
-        var buffer: NSString?  = nil
-        let foundWord = self.scanUpToCharacters(from: wordTerminators as CharacterSet, into: &buffer)
-        if foundWord {
-            return Token.Word(buffer!.lowercased)
+        let word = self.scanUpToCharacters(from: wordTerminators)
+        if let word = word {
+            return Token.Word(word.lowercased())
         } else {
             return nil
         }
@@ -80,10 +78,9 @@ extension Scanner {
         var punctuation: Punctuation? = nil
         while punctuation == nil {
             let _ = self.advanceToNextWord()
-            var buffer: NSString?  = nil
-            let foundWord = self.scanUpToCharacters(from: wordTerminators as CharacterSet, into: &buffer)
-            if foundWord {
-                result.append(Token.Word(buffer!.lowercased))
+            let word = self.scanUpToCharacters(from: wordTerminators)
+            if let word = word {
+                result.append(Token.Word(word.lowercased()))
                 punctuation = checkForPunctuation()
             } else {
                 punctuation = Punctuation.None
@@ -123,9 +120,9 @@ extension Scanner {
 }
 
 
+@available(OSX 10.15, *)
 class LoremParser {
     
-    @available(OSX 10.12, *)
     class func readLorem(index: Int) -> String? {
         
         let filename = FileManager.default.homeDirectoryForCurrentUser
@@ -156,10 +153,9 @@ class LoremParser {
         return sentences
     }
 
-    @available(OSX 10.12, *)
     func readAllSentences() -> [Sentence] {
         var sentences: [Sentence] = []
-        for i in 0...30 {            
+        for i in 0...30 {
             let rawString = LoremParser.readLorem(index: i)!
             let moreSentences = self.parseSentences(string: rawString)
             sentences = sentences + moreSentences
