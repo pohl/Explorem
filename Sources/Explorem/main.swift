@@ -71,8 +71,11 @@ private func displayRepeats<T>(_ counts: Multiset<T>) where T: HasWords {
 @available(OSX 10.15, *)
 func run() -> () {
     let parser = LoremParser()
-    let sentences: [Sentence] = parser
-        .readAllSentences()
+    let paragraphs: [Paragraph] = parser
+        .readAllParagraphs()
+    let sentences = paragraphs
+        .map { $0.sentences }
+        .flatMap { $0 }
         .filter( {!cannedSentences.contains($0) })
 
     printMeasurement(title: "main", operation: {
@@ -88,13 +91,13 @@ func run() -> () {
                 wordCounts.add(item: word)
             }
         }
-        //displaySentences(sentenceCounts)
+        displaySentences(sentenceCounts)
         //displayLengths(sentenceCounts)
         //displayRepeats(sentenceCounts)
         //displayWords(wordCounts)
         //displayPhrases(phraseCounts)
         //displayLengths(phraseCounts)
-        displayRepeats(sentenceCounts)
+        //displayRepeats(sentenceCounts)
 
     })
 }
@@ -104,6 +107,3 @@ if #available(OSX 10.15, *) {
 } else {
     // Fallback on earlier versions
 }
-
-
-

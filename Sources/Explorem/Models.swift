@@ -44,6 +44,15 @@ enum Token: Hashable {
         }
     }
     
+    var isSentenceTerminator: Bool {
+        switch self {
+        case .Word:
+            return false
+        case .Punctuation(let p):
+            return p != ","
+        }
+    }
+    
 }
 
 func == (lhs: Token, rhs: Token) -> Bool {
@@ -77,60 +86,13 @@ struct Phrase: CustomStringConvertible, HasWords {
     func hash(into hasher: inout Hasher) {
         hasher.combine(tokens)
     }
-}
-
-/*
-struct Sentence: CustomStringConvertible, HasWords {
-    var tokens:[Token]
     
-    init(fromTokens t: [Token]) {
-        tokens = t
-    }
-    
-    var words: [String] {
+    var isSentenceTerminator: Bool {
         return tokens
-            .filter { $0.isWord }
-            .map { $0.description }
+            .filter { $0.isSentenceTerminator }
+            .count != 0
     }
-    
-    var phrases: [Phrase] {
-        var phrases:[Phrase] = []
-        var buffer:[Token] = []
-        for token in tokens {
-            buffer.append(token)
-            if !token.isWord {
-                let phrase = Phrase(fromTokens: buffer)
-                phrases.append(phrase)
-                buffer = []
-            }
-        }
-        return phrases
-    }
-    
-    var description: String {
-        return tokens.map { $0.description }.joined(separator: " ")
-    }
-    
-    var asSourceArray: String {
-        var buffer = "let sentence:[Token] = [\n"
-        for token in tokens {
-            switch token {
-            case .Word(let w):
-                buffer.append(".Word(\"\(w)\"),\n")
-            case .Punctuation(let p):
-                buffer.append(".Punctuation(\"\(p)\"),\n")
-            }
-        }
-        buffer.append("]\n")
-        return buffer
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(tokens)
-    }
-    
 }
- */
 
 struct Sentence: CustomStringConvertible, HasWords {
     var phrases:[Phrase]
@@ -159,6 +121,35 @@ struct Sentence: CustomStringConvertible, HasWords {
         hasher.combine(phrases)
     }    
 }
+
+struct Paragraph: CustomStringConvertible, HasWords {
+    var sentences:[Sentence]
+    
+    init(fromSentences p: [Sentence]) {
+        sentences = p
+    }
+    
+    var tokens: [Token] {
+        return sentences
+            .map { $0.tokens }
+            .flatMap { $0 }
+    }
+    
+    var words: [String] {
+        return sentences
+            .map { $0.words }
+            .flatMap { $0 }
+    }
+    
+    var description: String {
+        return tokens.map { $0.description }.joined(separator: " ")
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(sentences)
+    }
+}
+
 
 extension HasWords {
     func findRepeatedWords() -> Set<String> {

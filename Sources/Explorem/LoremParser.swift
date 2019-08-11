@@ -4,13 +4,13 @@
 //  Created by pohl on 6/20/14.
 //  Copyright (c) 2014 pohl. All rights reserved.
 //
-import Foundation
 
-let alphanumeric = CharacterSet.alphanumerics
-let whitespace = CharacterSet.whitespacesAndNewlines
-let comma = CharacterSet(charactersIn: ",")
-let wordTerminators = CharacterSet(charactersIn: ".,; ")
-//let paragraphTerminators = CharacterSet(charactersIn: "\n")
+import Foundation
+import StringScanner
+
+let alphanumeric = CharactersSet.alphaNumeric
+let whitespace = CharactersSet.space
+let wordTerminators = CharactersSet.string(".,; ")
 
 enum Punctuation {
     case Comma
@@ -36,19 +36,14 @@ enum Punctuation {
     
 }
 
-@available(OSX 10.15, *)
-extension Scanner {
+extension StringScanner {
     
     func advanceToNextWord() -> String? {
-        return self.scanUpToCharacters(from: alphanumeric)
-    }
-    
-    func atPunctuation() -> String? {
-        return self.scanUpToCharacters(from: alphanumeric)
+        return self.scan(untilCharacterSet: alphanumeric).toString()
     }
     
     func checkForPunctuation() -> Punctuation? {
-        let string = self.scanUpToCharacters(from: whitespace)
+        let string = self.scan(untilCharacterSet: whitespace).toString()
         if let string = string {
             if "," == string {
                 return Punctuation.Comma
@@ -64,8 +59,16 @@ extension Scanner {
         }
     }
     
+    func checkForNewParagraph() -> Bool {
+        let whitespace = self.scan(untilCharacterSet:  alphanumeric).toString() ?? ""
+        let hasNewline = whitespace.contains("\n")
+        let length = whitespace.count
+        let hasSpace = whitespace.contains(" ")
+        return hasNewline
+    }
+    
     func checkForWord() -> Token? {
-        let word = self.scanUpToCharacters(from: wordTerminators)
+        let word = self.scan(untilCharacterSet: wordTerminators).toString()
         if let word = word {
             return Token.Word(word.lowercased())
         } else {
@@ -73,12 +76,12 @@ extension Scanner {
         }
     }
     
-    func nextPhrase() -> ([Token],Punctuation)? {
+    func nextPhrase() -> Phrase? {
         var result: [Token] = []
         var punctuation: Punctuation? = nil
         while punctuation == nil {
             let _ = self.advanceToNextWord()
-            let word = self.scanUpToCharacters(from: wordTerminators)
+            let word = self.scan(untilCharacterSet: wordTerminators).toString()
             if let word = word {
                 result.append(Token.Word(word.lowercased()))
                 punctuation = checkForPunctuation()
@@ -86,34 +89,45 @@ extension Scanner {
                 punctuation = Punctuation.None
             }
         }
-        if 0 != result.count {
-            return (result, punctuation!)
-        } else {
-            return nil
+        if let punctuation = punctuation {
+            result.append(Token.Punctuation(punctuation.description))
+            if punctuation == Punctuation.Semicolon {
+                NSLog("hmm")
+            }
         }
+        return !result.isEmpty ? Phrase(fromTokens: result) : nil
     }
     
     func nextSentence() -> Sentence? {
         var phrases: [Phrase] = []
-        var tuple: ([Token],Punctuation)? = nil
+        var phrase: Phrase? = nil
         outerLoop: while true {
-            tuple = nextPhrase()
-            if tuple != nil {
-                let (wordTokens, punctuation) = tuple!
-                var tokens: [Token] = wordTokens
-                tokens.append(Token.Punctuation(punctuation.description))
-                phrases.append(Phrase(fromTokens: tokens))
-                switch punctuation {
-                case .Comma:
-                    continue
-                default:
+            phrase = nextPhrase()
+            if let phrase = phrase {
+                phrases.append(phrase)
+                if phrase.isSentenceTerminator {
                     break outerLoop
+                } else {
+                    continue
                 }
             } else {
                 break outerLoop
             }
         }
         return phrases.count != 0 ? Sentence(fromPhrases: phrases) : nil
+    }
+    
+    func nextParagraph() -> Paragraph? {
+        var result: [Sentence] = []
+        var foundNewParagraph = false
+        while !foundNewParagraph {
+            let sentence = self.nextSentence()
+            if let sentence = sentence {
+                result.append(sentence)
+            }
+            foundNewParagraph = checkForNewParagraph()
+        }
+        return !result.isEmpty ? Paragraph(fromSentences: result) : nil
     }
 
     
@@ -139,29 +153,39 @@ class LoremParser {
         return lorem
     }
     
-    func parseSentences(string: String) -> [Sentence] {
-        let scanner = Scanner(string: string)
-        scanner.charactersToBeSkipped = nil
-        var sentences: [Sentence] = []
+    func parseParagraphs(string: String) -> [Paragraph] {
+        let scanner = StringScanner(string: string)
+        var paragraphs: [Paragraph] = []
         while true {
-            if let sentence = scanner.nextSentence() {
-                sentences.append(sentence)
+            if let paragraph = scanner.nextParagraph() {
+                paragraphs.append(paragraph)
             } else {
                 break
             }
         }
-        return sentences
+        return paragraphs
     }
 
-    func readAllSentences() -> [Sentence] {
-        var sentences: [Sentence] = []
-        for i in 0...30 {
+    func readAllParagraphs() -> [Paragraph] {
+        var paragraphs: [Paragraph] = []
+        for i in 0...0 {
             let rawString = LoremParser.readLorem(index: i)!
-            let moreSentences = self.parseSentences(string: rawString)
-            sentences = sentences + moreSentences
+            let moreParagraphs = self.parseParagraphs(string: rawString)
+            paragraphs = paragraphs + moreParagraphs
         }
-        return sentences
+        return paragraphs
     }
-    
- }
+}
 
+extension ScannerResult {
+    func toString() -> String? {
+        switch self {
+        case .end:
+            return nil
+        case .none:
+            return nil
+        case .value(let s):
+            return s
+        }
+    }
+}
